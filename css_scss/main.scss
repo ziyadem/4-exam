@@ -10,13 +10,20 @@ body{
   width: 100%;
   height: 100vh;
   background: url(../img/baground-img.jpg);
-  background:  #161718;
+  
   font-family: 'Montserrat';
   font-style: normal;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.hero{
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  background:  #161718;
+  opacity: 0.9;
 }
 
 .load{
@@ -33,9 +40,11 @@ body{
 }
 .logo{
   margin-bottom: 50px;
+  z-index: 2;
 }
 form{
   width: 300px;
+  z-index: 2;
   div{
       border: 1px solid #FFFFFF;
       border-radius: 4px;
@@ -43,15 +52,21 @@ form{
       align-items: center;
       gap: 20px;
       padding: 10px;
+      background-color: #161718;
       span{
         color: white;
       }
   }
   input{
     border: none;
+    color: white;
+    font-size: 20px;
+    background-color: #161718;
+
   }
   input:focus{
     border: none;
+    outline: none;
   }
   .hero-div{
     margin: 20px 0px 50px;

@@ -40,6 +40,12 @@ header button {
   color: white;
   border: none;
 }
+header button:hover {
+  color: #0D75FF;
+  background-color: white;
+  border: 1px solid #0D75FF;
+  box-shadow: 1px 2px 10px 1px #0D75FF;
+}
 header form {
   display: flex;
   align-items: center;
@@ -59,17 +65,21 @@ header form input {
   border: none;
   width: 100%;
 }
+header form input:focus {
+  border: none !important;
+  outline: none;
+}
 
 nav {
   height: 56px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
 nav .newest {
   display: flex;
-  align-items: center;
   gap: 8px;
   width: 180px;
   height: 34px;
@@ -87,9 +97,13 @@ nav .showing {
   color: #222531;
   margin-left: 300px;
 }
+nav p {
+  margin-bottom: 0;
+}
 
 .hero {
   display: flex;
+  width: 100%;
 }
 .hero .saved-body {
   width: 25%;
@@ -130,10 +144,13 @@ nav .showing {
   color: #FF6231;
 }
 
-.book-body {
+.bookBody {
   padding-top: 40px;
   width: 75%;
-  background: #E5E5E5;
+  background: white;
+}
+
+.book-body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -142,7 +159,7 @@ nav .showing {
   width: 30%;
   padding: 5px 15px;
   background-color: white;
-  height: 340px;
+  height: 450px;
   margin-bottom: 20px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -165,9 +182,10 @@ nav .showing {
 }
 .book-body .book-card #bookmar-info {
   margin: 10px 0 5px;
+  width: 100%;
 }
 .book-body .book-card #bookmar-info button {
-  width: 48%;
+  width: 45%;
   padding: 8px;
   justify-content: space-between;
   border: none;
@@ -176,9 +194,18 @@ nav .showing {
 .book-body .book-card #bookmar-info .bookmar-btn {
   background-color: #FFD80D;
 }
+.book-body .book-card #bookmar-info .bookmar-btn:hover {
+  border: 1px solid #FFD80D;
+  box-shadow: 2px 2px 10px 1px #FFD80D;
+}
 .book-body .book-card #bookmar-info .more-btn {
+  margin-left: 15px;
   background: rgba(13, 117, 255, 0.05);
   color: #0D75FF;
+}
+.book-body .book-card #bookmar-info .more-btn:hover {
+  border: 1px solid #0D75FF;
+  box-shadow: 2px 2px 10px 1px #0D75FF;
 }
 .book-body .book-card .read-btn {
   background-color: #75828A;
@@ -187,4 +214,139 @@ nav .showing {
   border: none;
   border-radius: 4px;
   color: white;
+}
+.book-body .book-card .read-btn:hover {
+  border: 1px solid #75828A;
+  box-shadow: 2px 2px 10px 1px #75828A;
+}
+.book-body .book-card:hover {
+  box-shadow: 2px 2px 10px 1px #757881;
+}
+
+.pogination {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: none;
+}
+.pogination .poginationBTN {
+  padding: 5px;
+  border: 1px solid #75acf4;
+  color: #0D75FF;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+}
+.pogination .poginationBTN:hover {
+  color: white;
+  background-color: #0D75FF;
+}
+
+.left, .right {
+  width: 50px;
+  height: 50px;
+}
+
+.disablet {
+  color: #0D75FF;
+  border: 1px solid #0D75FF;
+}
+
+.right {
+  color: #0D75FF;
+  border: 1px solid #0D75FF;
+}
+
+.offcanvas-body span {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.offcanvas-body img {
+  width: 200px;
+  height: 200px;
+}
+.offcanvas-body div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.offcanvas-body .two {
+  width: 137.83px;
+  height: 40px;
+  text-align: center;
+  padding: 5px;
+  background: rgba(13, 117, 255, 0.09);
+  border-radius: 30px;
+  color: #0D75FF;
+}
+.offcanvas-body .one {
+  color: #222531;
+}
+.offcanvas-body .read-end {
+  display: flex;
+  justify-content: end;
+}
+.offcanvas-body a {
+  text-decoration: none;
+  width: 112px;
+  height: 35px;
+  background: #75828A;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  margin-right: 30px;
+  text-align: center;
+  margin-top: 10px;
+}
+.offcanvas-body a:hover {
+  background: white;
+  border: 1px solid #75828A;
+  color: #75828A;
+}
+
+@media screen and (max-width: 1000px) {
+  .container {
+    padding: 0 10px !important;
+  }
+  .saved-body {
+    display: none;
+  }
+  .bookBody {
+    width: 100%;
+  }
+  .left, .right, .poginationBTN {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 10px;
+  }
+  .book-body {
+    background-color: white;
+    flex-wrap: wrap !important;
+  }
+  .book-card {
+    width: 45% !important;
+  }
+  nav {
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  form {
+    width: 100% !important;
+  }
+  .book-body {
+    flex-wrap: wrap !important;
+  }
+  .book-card {
+    width: 100% !important;
+  }
 }/*# sourceMappingURL=index.css.map */
