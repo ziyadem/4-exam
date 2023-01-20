@@ -1,16 +1,34 @@
 
 let load=document.querySelector(".load"),
-elInput=document.querySelector("input"),
-elForm=document.querySelector("form"),
-rigthPoginationBtn=document.querySelector(".right"),
-poginationBtn=document.querySelectorAll(".poginationBTN"),
-pogination=document.querySelector(".pogination"),
-leftPoginationBtn=document.querySelector(".left"),
-elSaveds=document.querySelector(".saveds"),
-offcanvasBody=document.querySelector(".offcanvas-body"),
-cardBody=document.querySelector(".bookBody"),
-logOut=document.querySelector("#logout");
-console.log(cardBody);
+    elInput=document.querySelector("input"),
+    elForm=document.querySelector("form"),
+    rigthPoginationBtn=document.querySelector(".right"),
+    poginationBtn=document.querySelectorAll(".poginationBTN"),
+    pogination=document.querySelector(".pogination"),
+    leftPoginationBtn=document.querySelector(".left"),
+    elSaveds=document.querySelector(".saveds"),
+    offcanvasBody=document.querySelector(".offcanvas-body"),
+    cardBody=document.querySelector(".bookBody"),
+    logOut=document.querySelector("#logout"),
+    newest=document.querySelector("#newest"),
+    newestP=document.querySelector(".newestP");
+
+// relevance and newest
+
+let key='newest';
+newest.addEventListener("click",()=>{
+    if(newest.getAttribute("class")==='order'){
+        newest.removeAttribute("class");
+        key="relevance";
+        newestP.textContent="relevance";
+    }else{
+        newest.setAttribute("class","order");
+        key='newest';
+        newestP.textContent="newest";
+    }
+});
+
+// logout
 
 logOut.addEventListener("click",()=>{
     localStorage.removeItem("token");
@@ -21,19 +39,28 @@ let getToken=localStorage.getItem('token');
 if(!getToken){
     window.location.replace('./login.html');
 }
+
+// loader
+
 setTimeout(() => {
     load.style.display="none";
 }, 1000);
+
+// search
 
 elForm.addEventListener("input",(e)=>{
     e.preventDefault();
     pogination.style.display = "block";
     cardBody.style.background = "#E5E5E5";
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=1&maxResults=6&orderBy=newest`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=1&maxResults=6&orderBy=${key}`)
     .then(response => response.json())
     .then(json => sartirofka(json.totalItems,json.items)) 
+    .catch((err)=>alert(err));
     
 });
+
+// pogination
+
 rigthPoginationBtn.addEventListener("click",()=>{
     leftPoginationBtn.disabled = false;
     leftPoginationBtn.classList.add("disablet");
@@ -57,33 +84,44 @@ if(leftPoginationBtn.disabled){
         }
     })
 }
+
+// pogination Click
+
 let btnNumber=0;
 let elBody = document.querySelector("body");
 function sartirofka(totalitem,arr) {
     renderBook(arr);
+    console.log(totalitem);
     elBody.addEventListener("click",(evt)=>{
         let text = evt.target.className;
         let text1=evt.target.id;
         if(text==='poginationBTN'){
             let b=evt.target.textContent;
             btnNumber= Number(b);
-            if(btnNumber*6<totalitem){
-                fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=${btnNumber*6}&maxResults=6&orderBy=newest`)
+            if((btnNumber+1)*6<totalitem){
+                // console.log(totalitem);
+                fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=${btnNumber*6}&maxResults=6&orderBy=${key}`)
                 .then(response => response.json())
                 .then(json => renderBook(json.items))
+                .catch((err)=>alert(err));
             }else{
+                alert("disablet")
                 console.log("disablet");
                 rigthPoginationBtn.disabled=true;
             }
         }
         if(text==="more-btn"){
-            fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=${btnNumber*6}&maxResults=6&orderBy=newest`)
+            fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=${btnNumber*6}&maxResults=6&orderBy=${key}`)
                 .then(response => response.json())
-                .then(json => more(json.items,text1));
+                .then(json => more(json.items,text1))
+                .catch((err)=>alert(err));
         }
         
     });    
 };
+
+// bookmarkList
+
 elBody.addEventListener("click",(evt)=>{
     let text1=evt.target.id;
     if(text1==='delete'){
@@ -122,6 +160,8 @@ elBody.addEventListener('click',(evt)=>{
 
 let bookBody=document.querySelector(".book-body");
 
+// functions
+
 function renderBook(arr) {
     bookBody.innerHTML='';
     for(i of arr){
@@ -132,7 +172,6 @@ function renderBook(arr) {
         let bookp2=document.createElement("p");
         let bookmarh3=document.createElement("h3");
         let bookmarBtn=document.createElement("button");
-        //  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
         let moreBtn=document.createElement("button");
         let readBtn=document.createElement("button");
         let link=document.createElement("a");
@@ -191,8 +230,6 @@ function renderBookmark(arr) {
         elspan2.append(elspan3,elspan4);
         eldiv.append(elspan1,elspan2);
         elSaveds.appendChild(eldiv);
-
-
     }
     
 }
@@ -256,64 +293,9 @@ function more(jsonItems,text1) {
             eldiv5.append(elp10,elp11);
             elspan1.innerHTML=`
             <a href=${i.volumeInfo.previewLink} target="_blank">read</a>
-            `;
-            // previewLink
-            
-            
-            console.log(i);
+            `;         
             offcanvasBody.append(elspan,elp1,eldiv1,eldiv2,eldiv3,eldiv4,eldiv5,elspan1)
             
         }
     }
 }
-
-{/* <span>
-            <img src="./img/baground-img.jpg" alt="">
-        </span>
-        <p></p>
-        <div>
-            <p class="one">wde:</p>
-            <p class="two">kjcd</p>
-            <p class="two">dsnj</p>
-        </div>
-        <div>
-            <p class="one">wde:</p>
-            <p class="two">kjcd</p>
-        </div>
-        <span class="read-end">
-            <button>Read</button>
-
-        </span> */}
-
-{/* <div class="saved-card">
-<span>
-    <h3>Python</h3>
-    <p>David M. Beazley</p>
-</span>
-<span>
-    <span class="material-symbols-outlined concats">import_contacts</span>
-    <span class="material-symbols-outlined more">more</span>
-</span>
-
-</div> */}
-
-{/* <div class="book-card">
-                    <img src="./img/baground-img.jpg" alt="">
-                    <h3>python</h3>
-                    <p>lorem ispum</p>
-                    <p>2003</p>
-                    <div id="bookmar-info">
-                        <button class="bookmar-btn" >Bookmark</button>
-                        <button class="more-btn">More info</button>
-                    </div>
-                    <button class="read-btn">Read</button>
-                   </div> */}
-
-// axios.defaults.baseURL="https://www.googleapis.com/books/v1/";
-// (async function (){
-//     let res = await axios.get("olumes?q=$%7BsearchItem%7D&startIndex=20&maxResults=20&orderBy=");
-//     console.log(res);
-    
-// })();
-
-
