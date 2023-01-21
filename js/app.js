@@ -55,7 +55,7 @@ elForm.addEventListener("input",(e)=>{
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=1&maxResults=6&orderBy=${key}`)
     .then(response => response.json())
     .then(json => sartirofka(json.totalItems,json.items)) 
-    .catch((err)=>alert(err));
+    .catch((err)=>console.log(err));
     
 });
 
@@ -99,11 +99,10 @@ function sartirofka(totalitem,arr) {
             let b=evt.target.textContent;
             btnNumber= Number(b);
             if((btnNumber+1)*6<totalitem){
-                // console.log(totalitem);
                 fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=${btnNumber*6}&maxResults=6&orderBy=${key}`)
                 .then(response => response.json())
                 .then(json => renderBook(json.items))
-                .catch((err)=>alert(err));
+                .catch((err)=>console.log(err));
             }else{
                 alert("disablet")
                 console.log("disablet");
@@ -114,7 +113,7 @@ function sartirofka(totalitem,arr) {
             fetch(`https://www.googleapis.com/books/v1/volumes?q=${elInput.value}&startIndex=${btnNumber*6}&maxResults=6&orderBy=${key}`)
                 .then(response => response.json())
                 .then(json => more(json.items,text1))
-                .catch((err)=>alert(err));
+                .catch((err)=>console.log(err));
         }
         
     });    
